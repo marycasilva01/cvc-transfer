@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -69,13 +71,15 @@ public class SaveTransferDataProviderImplTest {
         var currentDate = LocalDate.now();
         var dto = TransferFactory.createTransferDTODate(currentDate,0);
         var transfer = TransferFactory.createTransferDate(currentDate,0);
+
+        when(mapper.convertModelToDTO(Mockito.any())).thenReturn(TransferFactory.createTransferTypeAResponse());
         when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
         when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.A);
         when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(3.30).setScale(2));
         when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
-        Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(3.30).setScale(2),persistedTransfer.getFeeAmount());
         Assertions.assertEquals(TransferType.A, persistedTransfer.getType());
     }
 
@@ -84,43 +88,36 @@ public class SaveTransferDataProviderImplTest {
         var currentDate = LocalDate.now().plusDays(1);
         var dto = TransferFactory.createTransferDTODate(currentDate,9);
         var transfer = TransferFactory.createTransferDate(currentDate,9);
+
+        when(mapper.convertModelToDTO(Mockito.any())).thenReturn(TransferFactory.createTransferTypeBResponse());
         when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+
         when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
         when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(108));
         when(transferRepository.save(transfer)).thenReturn(transfer);
 
-        var persistedTransfer = saveTransferDataProviderImpl.save(dto);
-        Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
-        Assertions.assertEquals(TransferType.A,persistedTransfer.getType());
-    }
-
-    @Test
-    public void scheduleCaseBSameDate() {
-        LocalDate currentDate = LocalDate.now().plusDays(1);
-        var dto = TransferFactory.createTransferDTODate(currentDate,0);
-        var transfer = TransferFactory.createTransferDate(currentDate,0);
-        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
-        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(12));
-        when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
-        Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
-        Assertions.assertEquals(TransferType.A,persistedTransfer.getType());
+        Assertions.assertEquals(BigDecimal.valueOf(12).setScale(2),persistedTransfer.getFeeAmount());
+        Assertions.assertEquals(TransferType.B,persistedTransfer.getType());
     }
 
     @Test
     public void scheduleCaseC() {
-        var currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.now();
+
         var dto = TransferFactory.createTransferDTODate(currentDate,15);
         var transfer = TransferFactory.createTransferDate(currentDate,15);
         when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+
+        when(mapper.convertModelToDTO(Mockito.any())).thenReturn(TransferFactory.createTransferTypeCResponse());
+
         when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.C);
-        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(2));
+        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(0.80).setScale(2));
         when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
-        Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
-        Assertions.assertEquals(TransferType.A,persistedTransfer.getType());
+        Assertions.assertEquals(BigDecimal.valueOf(0.80).setScale(2),persistedTransfer.getFeeAmount());
+        Assertions.assertEquals(TransferType.C,persistedTransfer.getType());
     }
 }

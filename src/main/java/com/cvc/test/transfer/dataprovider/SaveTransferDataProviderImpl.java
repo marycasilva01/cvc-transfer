@@ -24,7 +24,7 @@ public class SaveTransferDataProviderImpl implements SaveTransferDataProvider {
     @Transactional
     public TransferResponse save(TransferDTO dto) {
         var transfer = mapper.convertDTOToModel(dto);
-        transfer.setType(defineTransferTypeDataProvider.define(transfer.getCreatedAt()));
+        transfer.setType(defineTransferTypeDataProvider.define(transfer.getTransferAt()));
         transfer.setFeeAmount(calculateFeeDataProvider.execute(transfer));
 
         var saved = transferRepository.save(transfer);

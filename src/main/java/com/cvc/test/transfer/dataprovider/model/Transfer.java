@@ -41,7 +41,7 @@ public class Transfer {
     @Column(name = "destination_account")
     private String destination;
 
-    @Column(name = "transfer_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private TransferType type;
 }

@@ -26,6 +26,19 @@ public final class TransferFactory {
         return new TransferResponse(new Random().nextLong(), BigDecimal.valueOf(10), BigDecimal.ONE, TransferType.A, LocalDate.now(), LocalDate.now().plusDays(2), "42342442", "423424421212");
     }
 
+    public static TransferResponse createTransferTypeAResponse(){
+        return new TransferResponse(new Random().nextLong(), BigDecimal.valueOf(10), BigDecimal.valueOf(3.30).setScale(2), TransferType.A, LocalDate.now(), LocalDate.now().plusDays(2), "42342442", "423424421212");
+    }
+
+    public static TransferResponse createTransferTypeBResponse(){
+        return new TransferResponse(new Random().nextLong(), BigDecimal.valueOf(10), BigDecimal.valueOf(12).setScale(2), TransferType.B, LocalDate.now(), LocalDate.now().plusDays(2), "42342442", "423424421212");
+    }
+
+    public static TransferResponse createTransferTypeCResponse(){
+        return new TransferResponse(new Random().nextLong(), BigDecimal.valueOf(10), BigDecimal.valueOf(0.80).setScale(2), TransferType.C, LocalDate.now(), LocalDate.now().plusDays(2), "42342442", "423424421212");
+    }
+
+
     public static Transfer createTransferComplete(){
         return new Transfer(new Random().nextLong(), BigDecimal.valueOf(10), BigDecimal.ONE,  LocalDate.now(), LocalDate.now().plusDays(2), "42342442", "423424421212", TransferType.A);
     }
