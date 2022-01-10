@@ -26,11 +26,11 @@ public class TransferResponse {
     @Schema(description = "Transfer type ")
     private TransferType type;
 
-    @Schema(description = "Transfer date ")
-    private LocalDate transferDate;
+    @Schema(description = "Transfer created at")
+    private LocalDate createdAt;
 
-    @Schema(description = "Transfer schedule cate ")
-    private LocalDate scheduleDate;
+    @Schema(description = "Transfer at")
+    private LocalDate transferAt;
 
     @Schema(description = "Transfer account origin ")
     private String accountOrigin;
