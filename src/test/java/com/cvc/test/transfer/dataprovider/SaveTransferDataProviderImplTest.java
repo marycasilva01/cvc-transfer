@@ -75,7 +75,7 @@ public class SaveTransferDataProviderImplTest {
         when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
-        Assertions.assertEquals(BigDecimal.valueOf(3.30).setScale(2),persistedTransfer.getFeeAmount());
+        Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
         Assertions.assertEquals(TransferType.A, persistedTransfer.getType());
     }
 
