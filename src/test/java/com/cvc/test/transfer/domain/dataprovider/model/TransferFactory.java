@@ -1,4 +1,4 @@
-package com.cvc.test.domain.dataprovider.model;
+package com.cvc.test.transfer.domain.dataprovider.model;
 
 import com.cvc.test.transfer.dataprovider.model.Transfer;
 import com.cvc.test.transfer.dataprovider.model.enums.TransferType;

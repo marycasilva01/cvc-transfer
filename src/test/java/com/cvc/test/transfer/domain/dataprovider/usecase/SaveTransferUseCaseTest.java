@@ -1,9 +1,9 @@
-package com.cvc.test.domain.dataprovider.usecase;
+package com.cvc.test.transfer.domain.dataprovider.usecase;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.common.exceptions.InvalidTransferException;
 import com.cvc.test.transfer.dataprovider.model.enums.TransferType;
 import com.cvc.test.transfer.domain.dataprovider.SaveTransferDataProvider;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.domain.usecase.SaveTransferUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)

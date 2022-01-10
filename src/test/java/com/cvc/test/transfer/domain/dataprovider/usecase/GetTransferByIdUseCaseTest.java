@@ -1,10 +1,7 @@
-package com.cvc.test.domain.dataprovider.usecase;
+package com.cvc.test.transfer.domain.dataprovider.usecase;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
-import com.cvc.test.transfer.dataprovider.GetTransferByIdDataProviderImpl;
-import com.cvc.test.transfer.dataprovider.mapper.TransferMapper;
-import com.cvc.test.transfer.dataprovider.repository.TransferRepository;
 import com.cvc.test.transfer.domain.dataprovider.GetTransferByIdDataProvider;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.domain.usecase.GetTransferByIdUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.cvc.test.domain.dataprovider.usecase;
+package com.cvc.test.transfer.domain.dataprovider.usecase;
 
 import com.cvc.test.transfer.domain.dataprovider.GetTransferDataProvider;
 import com.cvc.test.transfer.domain.usecase.GetTransferUseCase;

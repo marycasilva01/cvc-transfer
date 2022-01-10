@@ -1,10 +1,9 @@
-package com.cvc.test.dataprovider;
+package com.cvc.test.transfer.dataprovider;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.common.exceptions.UndefinedFeeException;
-import com.cvc.test.transfer.dataprovider.CalculateFeeDataProviderImpl;
 import com.cvc.test.transfer.dataprovider.model.Transfer;
 import com.cvc.test.transfer.dataprovider.model.enums.TransferType;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

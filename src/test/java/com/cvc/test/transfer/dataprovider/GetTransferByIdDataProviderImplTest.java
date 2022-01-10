@@ -1,10 +1,8 @@
-package com.cvc.test.dataprovider;
+package com.cvc.test.transfer.dataprovider;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
-import com.cvc.test.transfer.common.exceptions.DateIntervalInvalidException;
-import com.cvc.test.transfer.dataprovider.GetTransferByIdDataProviderImpl;
 import com.cvc.test.transfer.dataprovider.mapper.TransferMapper;
 import com.cvc.test.transfer.dataprovider.repository.TransferRepository;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

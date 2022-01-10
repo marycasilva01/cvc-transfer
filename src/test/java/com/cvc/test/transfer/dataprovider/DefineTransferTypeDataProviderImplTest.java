@@ -1,7 +1,6 @@
-package com.cvc.test.dataprovider;
+package com.cvc.test.transfer.dataprovider;
 
 import com.cvc.test.transfer.common.exceptions.DateIntervalInvalidException;
-import com.cvc.test.transfer.dataprovider.DefineTransferTypeDataProviderImpl;
 import com.cvc.test.transfer.dataprovider.model.enums.TransferType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

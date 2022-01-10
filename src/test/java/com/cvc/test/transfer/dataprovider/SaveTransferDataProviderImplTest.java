@@ -1,9 +1,8 @@
-package com.cvc.test.dataprovider;
+package com.cvc.test.transfer.dataprovider;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.common.exceptions.DateIntervalInvalidException;
 import com.cvc.test.transfer.common.exceptions.UndefinedFeeException;
-import com.cvc.test.transfer.dataprovider.SaveTransferDataProviderImpl;
 import com.cvc.test.transfer.dataprovider.mapper.TransferMapper;
 import com.cvc.test.transfer.dataprovider.model.enums.TransferType;
 import com.cvc.test.transfer.dataprovider.repository.TransferRepository;
@@ -20,6 +19,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class SaveTransferDataProviderImplTest {
@@ -41,15 +42,15 @@ public class SaveTransferDataProviderImplTest {
 
     @BeforeEach
     void setUp(){
-        Mockito.when(mapper.convertModelToDTO(Mockito.any())).thenReturn(TransferFactory.createTransferResponse());
+        when(mapper.convertModelToDTO(Mockito.any())).thenReturn(TransferFactory.createTransferResponse());
     }
 
     @Test
     public void test_save_with_past_date() {
         var currentDate = LocalDate.now();
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(TransferFactory.createTransferComplete());
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(TransferFactory.createTransferComplete());
         var transfer = TransferFactory.createTransferDTODate(currentDate.minusDays(1),0);
-        Mockito.when(defineTransferTypeDataProvider.define(Mockito.any())).thenThrow(DateIntervalInvalidException.class);
+        when(defineTransferTypeDataProvider.define(Mockito.any())).thenThrow(DateIntervalInvalidException.class);
         Assertions.assertThrows(DateIntervalInvalidException.class, () -> saveTransferDataProviderImpl.save(transfer));
     }
 
@@ -58,9 +59,8 @@ public class SaveTransferDataProviderImplTest {
         var transfer = TransferFactory.createTransferDate(LocalDate.now(),0);
         var dto =  TransferFactory.createTransferDTODate(LocalDate.now(),0);
         var currentDate = LocalDate.now();
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        Mockito.when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.A);
-        Mockito.when(calculateFeeDataProvider.execute(transfer)).thenThrow(UndefinedFeeException.class);
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.A);when(calculateFeeDataProvider.execute(transfer)).thenThrow(UndefinedFeeException.class);
         Assertions.assertThrows(UndefinedFeeException.class, () -> saveTransferDataProviderImpl.save(dto));
     }
 
@@ -69,10 +69,10 @@ public class SaveTransferDataProviderImplTest {
         var currentDate = LocalDate.now();
         var dto = TransferFactory.createTransferDTODate(currentDate,0);
         var transfer = TransferFactory.createTransferDate(currentDate,0);
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        Mockito.when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.A);
-        Mockito.when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(3.30).setScale(2));
-        Mockito.when(transferRepository.save(transfer)).thenReturn(transfer);
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.A);
+        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(3.30).setScale(2));
+        when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
         Assertions.assertEquals(BigDecimal.valueOf(3.30).setScale(2),persistedTransfer.getFeeAmount());
@@ -84,10 +84,10 @@ public class SaveTransferDataProviderImplTest {
         var currentDate = LocalDate.now().plusDays(1);
         var dto = TransferFactory.createTransferDTODate(currentDate,9);
         var transfer = TransferFactory.createTransferDate(currentDate,9);
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        Mockito.when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
-        Mockito.when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(108));
-        Mockito.when(transferRepository.save(transfer)).thenReturn(transfer);
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
+        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(108));
+        when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
         Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
@@ -99,10 +99,10 @@ public class SaveTransferDataProviderImplTest {
         LocalDate currentDate = LocalDate.now().plusDays(1);
         var dto = TransferFactory.createTransferDTODate(currentDate,0);
         var transfer = TransferFactory.createTransferDate(currentDate,0);
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        Mockito.when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
-        Mockito.when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(12));
-        Mockito.when(transferRepository.save(transfer)).thenReturn(transfer);
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.B);
+        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(12));
+        when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
         Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());
@@ -114,10 +114,10 @@ public class SaveTransferDataProviderImplTest {
         var currentDate = LocalDate.now();
         var dto = TransferFactory.createTransferDTODate(currentDate,15);
         var transfer = TransferFactory.createTransferDate(currentDate,15);
-        Mockito.when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
-        Mockito.when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.C);
-        Mockito.when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(2));
-        Mockito.when(transferRepository.save(transfer)).thenReturn(transfer);
+        when(mapper.convertDTOToModel(Mockito.any())).thenReturn(transfer);
+        when(defineTransferTypeDataProvider.define(currentDate)).thenReturn(TransferType.C);
+        when(calculateFeeDataProvider.execute(transfer)).thenReturn(BigDecimal.valueOf(2));
+        when(transferRepository.save(transfer)).thenReturn(transfer);
 
         var persistedTransfer = saveTransferDataProviderImpl.save(dto);
         Assertions.assertEquals(BigDecimal.valueOf(1),persistedTransfer.getFeeAmount());

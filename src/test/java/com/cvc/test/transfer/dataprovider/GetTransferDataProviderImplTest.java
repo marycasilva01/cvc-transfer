@@ -1,7 +1,6 @@
-package com.cvc.test.dataprovider;
+package com.cvc.test.transfer.dataprovider;
 
-import com.cvc.test.domain.dataprovider.model.TransferFactory;
-import com.cvc.test.transfer.dataprovider.GetTransferDataProviderImpl;
+import com.cvc.test.transfer.domain.dataprovider.model.TransferFactory;
 import com.cvc.test.transfer.dataprovider.mapper.TransferMapper;
 import com.cvc.test.transfer.dataprovider.repository.TransferRepository;
 import org.junit.jupiter.api.Assertions;
