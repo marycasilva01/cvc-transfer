@@ -24,14 +24,13 @@ curl -X POST "http://localhost:8080/cvc/transfers"
 ```shell
 {
   "id": 1,
-  "amount": 100,
-  "feeAmount": 6,
-  "type": "A",
-  "transferDate": "2022-01-08",
-  "scheduleDate": "2022-01-19",
-  "accountOrigin": "12344",
-  "accountDestination": "234555",
-  "language": null
+  "amount": 100000,
+  "feeAmount": 4000,
+  "type": "C",
+  "createdAt": "2022-01-10",
+  "transferAt": "2022-02-10",
+  "accountOrigin": "1234",
+  "accountDestination": "2345"
 }
 ```
 
